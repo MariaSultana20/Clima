@@ -9,8 +9,8 @@
 import Foundation
 
 protocol WeatherManagerDelegate {
-    func didUpdateWeather(weather: WeatherModel)
-    func didFailWithError(error: Error)
+    func didUpdateWeather(_ weather: WeatherModel)
+    func didFailWithError(_ error: Error)
 }
 
 struct WeatherManger {
@@ -20,10 +20,10 @@ struct WeatherManger {
     
     func fetchWeather(forCity city: String) {
         let url = "\(weatherUrl)&q=\(city)"
-        performRequest(urlString: url)
+        performRequest(with: url)
     }
     
-    func performRequest(urlString: String) {
+    func performRequest(with urlString: String) {
         //Create URL
         guard let url = URL(string: urlString) else {
             print("Could not create URL")
@@ -36,12 +36,12 @@ struct WeatherManger {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let error {
                 print("Found error: \(error)")
-                delegate?.didFailWithError(error: error)
+                delegate?.didFailWithError(error)
                 return
             }
             if let data {
-                if let weather = parseData(data: data) {
-                    delegate?.didUpdateWeather(weather: weather)
+                if let weather = parseData(with: data) {
+                    delegate?.didUpdateWeather(weather)
                 }
             }
         }
@@ -49,7 +49,7 @@ struct WeatherManger {
         task.resume()
     }
     
-    func parseData(data: Data) -> WeatherModel? {
+    func parseData(with data: Data) -> WeatherModel? {
         let decoder = JSONDecoder()
         do {
             let weatherData = try decoder.decode(WeatherData.self, from: data)
@@ -63,10 +63,8 @@ struct WeatherManger {
             return weather
         } catch {
             print("Found error: \(error)")
-            delegate?.didFailWithError(error: error)
+            delegate?.didFailWithError(error)
             return nil
         }
     }
-    
-   
 }
