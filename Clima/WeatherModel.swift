@@ -17,7 +17,7 @@ struct WeatherModel {
         String(format: "%0.1f", temperature)
     }
     
-    var weatherIcon: String {
+    var weatherIconName: String {
         switch id {
         case 200..<300:
             return "cloud.bolt"

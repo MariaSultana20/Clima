@@ -7,20 +7,22 @@
 //
 
 import UIKit
+//import ReactiveSwift
 
-class WeatherViewController: UIViewController, UITextFieldDelegate {
+class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
     let apiKey = "0dc4eb295ef271fbe67c3eeede1c2ed8"
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
     
-    let weatherManager = WeatherManger()
+    var weatherManager = WeatherManger()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         searchField.delegate = self
+        weatherManager.delegate = self
     }
     
     @IBAction func searchButtonPressed(_ sender: UIButton) {
@@ -49,5 +51,8 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
         }
         searchField.text = ""
     }
+    
+    func updateWeather(weather: WeatherModel) {
+        print(weather.temperatureString)
+    }
 }
-
