@@ -9,7 +9,8 @@
 import Foundation
 
 protocol WeatherManagerDelegate {
-    func updateWeather(weather: WeatherModel)
+    func didUpdateWeather(weather: WeatherModel)
+    func didFailWithError(error: Error)
 }
 
 struct WeatherManger {
@@ -35,15 +36,15 @@ struct WeatherManger {
         let task = urlSession.dataTask(with: url) { data, response, error in
             if let error {
                 print("Found error: \(error)")
+                delegate?.didFailWithError(error: error)
                 return
             }
             if let data {
                 if let weather = parseData(data: data) {
-                    delegate?.updateWeather(weather: weather)
+                    delegate?.didUpdateWeather(weather: weather)
                 }
             }
         }
-        
         //start the task
         task.resume()
     }
@@ -62,6 +63,7 @@ struct WeatherManger {
             return weather
         } catch {
             print("Found error: \(error)")
+            delegate?.didFailWithError(error: error)
             return nil
         }
     }
