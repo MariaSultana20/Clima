@@ -9,11 +9,13 @@
 import UIKit
 
 class WeatherViewController: UIViewController, UITextFieldDelegate {
-    
+    let apiKey = "0dc4eb295ef271fbe67c3eeede1c2ed8"
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
+    
+    let weatherManager = WeatherManger()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +40,14 @@ class WeatherViewController: UIViewController, UITextFieldDelegate {
             textField.placeholder = "Please, Type Something!"
             return false
         }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        //fetch weather data
+        if let cityName = textField.text {
+            weatherManager.fetchWeather(forCity: cityName)
+        }
+        searchField.text = ""
     }
 }
 
