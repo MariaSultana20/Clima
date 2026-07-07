@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import ReactiveSwift
+import CoreLocation
 
 class WeatherViewController: UIViewController {
     @IBOutlet weak var conditionImageView: UIImageView!
@@ -16,9 +16,14 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var searchField: UITextField!
     
     var weatherManager = WeatherManger()
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
         
         searchField.delegate = self
         weatherManager.delegate = self
@@ -27,6 +32,7 @@ class WeatherViewController: UIViewController {
     @IBAction func searchButtonPressed(_ sender: UIButton) {
         searchField.endEditing(true)
     }
+    
 }
 
 //MARK: - UITextFieldDelegate
@@ -55,10 +61,9 @@ extension WeatherViewController: UITextFieldDelegate {
     }
 }
 
-//MARK: - WeatherMangaerDelegate
+//MARK: - WeatherManagerDelegate
 extension WeatherViewController: WeatherManagerDelegate {
     func didUpdateWeather(_ weather: WeatherModel) {
-        print(weather.temperatureString)
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.temperatureString
             self.cityLabel.text = weather.cityName
@@ -67,6 +72,22 @@ extension WeatherViewController: WeatherManagerDelegate {
     }
     
     func didFailWithError(_ error: any Error) {
+        print(error)
+    }
+}
+
+//MARK: - CLLocationManagerDelegate
+extension WeatherViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
+        if let location = locations.last {
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            weatherManager.fetchWeather(latitude: lat, longitude: lon)
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
         print(error)
     }
 }
