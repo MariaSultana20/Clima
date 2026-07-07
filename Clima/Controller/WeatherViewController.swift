@@ -9,8 +9,7 @@
 import UIKit
 //import ReactiveSwift
 
-class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManagerDelegate {
-    let apiKey = "0dc4eb295ef271fbe67c3eeede1c2ed8"
+class WeatherViewController: UIViewController {
     @IBOutlet weak var conditionImageView: UIImageView!
     @IBOutlet weak var temperatureLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
@@ -28,7 +27,10 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
     @IBAction func searchButtonPressed(_ sender: UIButton) {
         searchField.endEditing(true)
     }
-    
+}
+
+//MARK: - UITextFieldDelegate
+extension WeatherViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         searchField.endEditing(true)
         return true
@@ -51,9 +53,17 @@ class WeatherViewController: UIViewController, UITextFieldDelegate, WeatherManag
         }
         searchField.text = ""
     }
-    
+}
+
+//MARK: - WeatherMangaerDelegate
+extension WeatherViewController: WeatherManagerDelegate {
     func didUpdateWeather(_ weather: WeatherModel) {
         print(weather.temperatureString)
+        DispatchQueue.main.async {
+            self.temperatureLabel.text = weather.temperatureString
+            self.cityLabel.text = weather.cityName
+            self.conditionImageView.image = UIImage(systemName: weather.weatherIconName)
+        }
     }
     
     func didFailWithError(_ error: any Error) {
