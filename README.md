@@ -1,54 +1,62 @@
+# Clima
 
-![App Brewery Banner](Documentation/AppBreweryBanner.png)
+Clima is a UIKit weather app that displays current weather conditions for the user's location or a manually searched city. It was built as part of Angela Yu's iOS course and focuses on networking, JSON decoding, Core Location, and delegate-based communication in a storyboard-driven iOS app.
 
-#  Clima
+## Screenshots
 
-## Our Goal
+| Light Mode | Dark Mode |
+| --- | --- |
+| <img src="Documentation/clima-screenshot-light-mode.png" alt="Clima app light mode screenshot" width="260"> | <img src="Documentation/clima-screenshot-dark-mode.png" alt="Clima app dark mode screenshot" width="260"> |
 
-It’s time to take our app development skills to the next level. We’re going to introduce you to the wonderful world of Application Programming Interfaces (APIs) to grab live data from the internet. If you’re dreaming of making that Twitter-powered stock trading app then you’re about add some serious tools to your toolbelt!
+## Features
 
+* Fetches live weather data from the OpenWeatherMap API.
+* Gets current-location weather using Core Location.
+* Supports manual city search through a text field.
+* Displays the city name and temperature in Celsius.
+* Shows weather condition icons using SF Symbols.
+* Supports light and dark mode visual assets.
+* Uses delegate patterns for text input, location updates, and weather updates.
 
-## What you will create
+## Technical Overview
 
-By the end of the module, you will have made a beautiful, dark-mode enabled weather app. You'll be able to check the weather for the current location based on the GPS data from the iPhone as well as by searching for a city manually. 
+* `WeatherViewController` manages the main screen, user interactions, location requests, and UI updates.
+* `WeatherManger` builds API requests, performs networking with `URLSession`, decodes JSON responses, and reports results through a delegate.
+* `WeatherData` defines the Codable model for the OpenWeatherMap API response.
+* `WeatherModel` prepares display-ready values, including formatted temperature and the matching SF Symbol name.
 
-## What you will learn
+## Project Structure
 
-* How to create a dark-mode enabled app.
-* How to use vector images as image assets.
-* Learn to use the UITextField to get user input. 
-* Learn about the delegate pattern.
-* Swift protocols and extensions. 
-* Swift guard keyword. 
-* Swift computed properties.
-* Swift closures and completion handlers.
-* Learn to use URLSession to network and make HTTP requests.
-* Parse JSON with the native Encodable and Decodable protocols. 
-* Learn to use Grand Central Dispatch to fetch the main thread.
-* Learn to use Core Location to get the current location from the phone GPS. 
-
-### Condition Codes
-```
-switch conditionID {
-        case 200...232:
-            return "cloud.bolt"
-        case 300...321:
-            return "cloud.drizzle"
-        case 500...531:
-            return "cloud.rain"
-        case 600...622:
-            return "cloud.snow"
-        case 701...781:
-            return "cloud.fog"
-        case 800:
-            return "sun.max"
-        case 801...804:
-            return "cloud.bolt"
-        default:
-            return "cloud"
-        }
+```text
+.
+|-- Clima.xcodeproj
+`-- Clima/
+    |-- README.md
+    |-- Documentation/
+    |   |-- clima-screenshot-light-mode.png
+    |   `-- clima-screenshot-dark-mode.png
+    `-- Clima/
+        |-- Controller/
+        |-- Model/
+        |-- View/
+        `-- Assets.xcassets
 ```
 
->This is a companion project to The App Brewery's Complete App Development Bootcamp, check out the full course at [www.appbrewery.co](https://www.appbrewery.co/)
+## Getting Started
 
-![End Banner](Documentation/readme-end-banner.png)
+1. Open `Clima.xcodeproj` from the repository root in Xcode.
+2. Add a valid OpenWeatherMap API key in `WeatherManger.swift`.
+3. Build and run the app on a simulator or physical device.
+4. Allow location access when prompted to use current-location weather.
+
+## Concepts Practiced
+
+* UIKit and storyboard-based interface building.
+* `UITextFieldDelegate`.
+* Custom Swift protocols and delegation.
+* Core Location permission handling and GPS coordinate lookup.
+* Networking with `URLSession`.
+* JSON parsing with `Codable`.
+* Main-thread UI updates after asynchronous work.
+* Computed properties for display formatting.
+
