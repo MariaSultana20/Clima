@@ -15,7 +15,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var searchField: UITextField!
     
-    var weatherManager = WeatherManger()
+    var weatherManager = WeatherManager()
     var locationManager = CLLocationManager()
     
     override func viewDidLoad() {

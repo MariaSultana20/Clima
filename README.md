@@ -21,7 +21,7 @@ Clima is a UIKit weather app that displays current weather conditions for the us
 ## Technical Overview
 
 * `WeatherViewController` manages the main screen, user interactions, location requests, and UI updates.
-* `WeatherManger` builds API requests, performs networking with `URLSession`, decodes JSON responses, and reports results through a delegate.
+* `WeatherManager` builds API requests, performs networking with `URLSession`, decodes JSON responses, and reports results through a delegate.
 * `WeatherData` defines the Codable model for the OpenWeatherMap API response.
 * `WeatherModel` prepares display-ready values, including formatted temperature and the matching SF Symbol name.
 
