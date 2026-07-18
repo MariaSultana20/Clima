@@ -1,6 +1,6 @@
 # Clima
 
-Clima is a UIKit weather app that displays current weather conditions for the user's location or a manually searched city. It was built as part of Angela Yu's iOS course and focuses on networking, JSON decoding, Core Location, and delegate-based communication in a storyboard-driven iOS app.
+Clima is a UIKit weather app that displays current weather conditions for the user's location or a manually searched city. It focuses on networking, JSON decoding, Core Location, and delegate-based communication in a storyboard-driven iOS app.
 
 ## Screenshots
 
